@@ -7,6 +7,10 @@ export default function Weather() {
     const [loading, setLoading] = useState(false);
     const [weatherData, setWeatherData] = useState(null);
 
+    function getCelsius(far) {
+        return (far - 32) * 5 / 9
+    }
+
     async function fetchData(param) {
         setLoading(true);
         try {
@@ -43,8 +47,8 @@ export default function Weather() {
         return date;
     }
 
-    useEffect(() => {
-    }, [])
+    // useEffect(() => {
+    // }, [])
 
     return (
         <div>
@@ -52,38 +56,45 @@ export default function Weather() {
                 setSearch={setSearch}
                 handleSearch={handleSearch}
             />
-            {loading ?
-                <div className="loader">Loading...</div>
-                :
-                <div className="city-name">
-                    <h2>
-                        {weatherData?.resolvedAddress}
-                    </h2>
-                    <div className="date">
-                        <span> {getCurrentDate()} </span>
+            {
+                loading
+                    ?
+                    <div className="loader-container">
+                        <div className="loader"></div>
                     </div>
-                    <div className="temperature">
-                        {/* temperatura */}
-                        {weatherData?.currentConditions.dew}
-                    </div>
-                    <p className="description">
-                        {weatherData?.description}
-                    </p>
-                    <div className="weather-info">
-                        <div>
-                            <div>
-                                <p className="wind"> {weatherData?.currentConditions.windspeed} </p>
-                                <p>Wind speed</p>
+                    :
+                    weatherData ?
+                        <div className="city-name">
+                            <h2>
+                                {weatherData?.resolvedAddress}
+                            </h2>
+                            <div className="date">
+                                <span> {getCurrentDate()} </span>
+                            </div>
+                            <div className="temperature">
+                                {/* temperatura */}
+                                {weatherData ? getCelsius(weatherData.currentConditions.dew) : ''}°
+                            </div>
+                            <p className="description">
+                                {weatherData?.description}
+                            </p>
+                            <div className="weather-info">
+                                <div>
+                                    <div>
+                                        <p className="wind"> {weatherData?.currentConditions.windspeed} </p>
+                                        <p>Wind speed</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <p className="humidity"> {weatherData?.currentConditions.humidity}% </p>
+                                        <p>Humidity</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <div>
-                                <p className="humidity"> {weatherData?.currentConditions.humidity}% </p>
-                                <p>Humidity</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        :
+                        ''
             }
         </div>
     )
