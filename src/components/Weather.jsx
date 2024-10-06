@@ -7,16 +7,20 @@ export default function Weather() {
     const [loading, setLoading] = useState(false);
     const [weatherData, setWeatherData] = useState(null);
 
-    async function fetchData() {
+    async function fetchData(param) {
         try {
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}appid=${API_KEY}`)
+            const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${search}/?key=${API_KEY} `)
+            const data = await response.json();
+            console.log(data, "data");
+
         } catch (e) {
             console.log(e);
 
         }
     }
 
-    async function handleSearch() {
+    function handleSearch() {
+        fetchData(search)
     }
 
 

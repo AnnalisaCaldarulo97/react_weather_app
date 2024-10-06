@@ -1,2 +1,2 @@
 # Weather App 
--  Using OpenWeather APIs (https://home.openweathermap.org/)
+-  Using VisualCrossing APIs (https://www.visualcrossing.com/)
